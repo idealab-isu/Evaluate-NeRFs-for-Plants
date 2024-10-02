@@ -1,7 +1,6 @@
-```markdown
 # Dataset Documentation
 
-## Structure
+## Directory Structure
 
 ```
 Dataset
@@ -23,45 +22,49 @@ Dataset
 
 ## Overview
 
-This dataset is structured to support research in 3D reconstruction and image-based modeling, particularly for plant-based scenarios. It contains two main components: captured images with their corresponding poses, and ground truth LiDAR scans for evaluation.
+This dataset is structured to support research in 3D reconstruction and computer vision, particularly for plant-based scenarios. It contains two main components: captured images with their corresponding poses, and ground truth LiDAR scans for evaluation.
 
-## Images and Poses
+## Dataset Components
 
-The "Images and Poses" folder contains datasets captured using Polycam, which have been processed for use with 'nerfstudio'. Each subfolder represents a different capture scenario or validation set.
+### 1. Images and Poses
 
-### Contents:
+The "Images and Poses" folder contains datasets captured using Polycam, which have been processed for use with 'nerfstudio'. Each subfolder in this directory includes:
+
 - Original images
 - Downsampled images (by factors of 2, 4, and 8)
-- Camera poses in 'transform.json' file
+- A 'transform.json' file containing camera pose information
 
-### Scenarios:
+### 2. Ground Truth Point Clouds And Alignment Matrices
+
+This folder contains the corresponding LiDAR scans (.ply files) that serve as ground truth for the captured scenes. These scans are essential for evaluating the accuracy of 3D reconstructions.
+
+## Scenario Identifiers
+
+The dataset includes three main scenarios, each corresponding to a specific research setup:
+
 1. **CCL-scanned-data-multiple-polycam-images-processed**: 
-   - Corresponds to Scenario-III in the research paper
-   - Multiple plants outdoors in field
+   - Scenario-III in the research paper
+   - Represents multiple plants outdoors in a field setting
 
 2. **CCL-scanned-data-outdoor-stage2-low-height-processed**: 
-   - Corresponds to Scenario-II in the research paper
-   - Multiple plants indoors
+   - Scenario-II in the research paper
+   - Represents multiple plants indoors
 
 3. **CCL-scanned-data-single-img-50-qual-90-processed**: 
-   - Corresponds to Scenario-I in the research paper
-   - Single plant indoors
+   - Scenario-I in the research paper
+   - Represents a single plant indoors
 
-4. **lpips-validation-data-processed** (and its numbered variants):
-   - Validation datasets
-   - Contains only images and poses, no ground truth data
+## Additional Data
 
-## Ground Truth Point Clouds And Alignment Matrices
+Folders prefixed with "lpips" (e.g., lpips-validation-data-processed) contain only images and poses, without corresponding ground truth data. These are typically used for additional validation or testing purposes.
 
-This folder contains the ground truth LiDAR scans (.ply files) corresponding to the first three scenarios mentioned above. These scans serve as the reference for evaluating the accuracy of 3D reconstructions.
+## Folder Contents Example
 
-### Typical Contents of a Ground Truth Folder:
-
-Using "CCL-scanned-data-single-img-50-qual-90-processed" as an example:
+Here's an example of what you might find in a typical scenario folder:
 
 ```
-CCL-scanned-data-single-img-50-qual-90-processed/
-├── evaluations/
+CCL-scanned-data-single-img-50-qual-90-processed
+├── evaluations
 ├── CCL-scanned-data-single-img-50-qual-90-processed_COLMAP_SfM.log
 ├── CCL-scanned-data-single-img-50-qual-90-processed_trans.txt
 ├── CCL-scanned-data-single-img-50-qual-90-processed-cleaned-old-v1.ply
@@ -70,27 +73,16 @@ CCL-scanned-data-single-img-50-qual-90-processed/
 └── CCL-scanned-data-single-img-50-qual-90-processed.ply
 ```
 
-- **[scenario-name].ply**: The main LiDAR scan ground truth file
-- **[scenario-name]_trans.txt**: Alignment matrix for the ground truth
-- **[scenario-name]-uncleaned.ply**: Raw, unprocessed LiDAR scan
-- **[scenario-name]-cleaned-old-v1.ply**: An earlier version of the cleaned scan
-- **[scenario-name].json**: Optional crop file for evaluation scripts (based on Tanks And Temples repository)
-- **[scenario-name]_COLMAP_SfM.log**: Intermediary file from evaluation process (not essential)
+Key files in this structure include:
 
-## Usage
+- **_trans.txt**: Contains the alignment matrix
+- **.ply files**: Various versions of the LiDAR scan, including cleaned and uncleaned versions
+- **.json file**: (Optional) Used for evaluation scripts based on the 'Tanks And Temples repository'
 
-1. For 3D reconstruction tasks:
-   - Use the images and poses from the "Images and Poses" folder as input for your reconstruction algorithms.
-   - The 'transform.json' file in each scenario folder contains the camera pose information.
+## Usage Notes
 
-2. For evaluation:
-   - Compare your reconstructions against the ground truth .ply files in the "Ground Truth Point Clouds And Alignment Matrices" folder.
-   - Use the alignment matrices (_trans.txt files) to ensure proper alignment between your reconstruction and the ground truth.
+- The ground truth LiDAR scans are crucial for evaluating the accuracy of 3D reconstructions generated from the image datasets.
+- When working with a specific scenario, ensure you use the corresponding images, poses, and ground truth data from the matching folders in both main directories.
+- The lpips-prefixed folders can be used for additional validation but lack ground truth data.
 
-3. For validation:
-   - The lpips-validation-data-processed folders can be used for additional testing or validation of your models, though they lack ground truth data.
-
-## Note
-
-The structure and contents of each folder may vary slightly. Always check the specific contents of the folder you're working with. The examples provided are representative but may not be identical across all scenarios.
-```
+This dataset structure allows for comprehensive research in 3D reconstruction techniques, particularly in plant-based scenarios, providing both the necessary input data (images and poses) and ground truth data for evaluation.
