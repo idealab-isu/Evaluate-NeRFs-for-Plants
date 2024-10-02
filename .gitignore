@@ -2,6 +2,10 @@
 *.ply
 *.h5
 
+#ignoring the logs inside tanks and temples
+**/evaluations/
+
+
 # coming default from nerfstudio project
 # Byte-compiled / optimized / DLL files
 __pycache__/
